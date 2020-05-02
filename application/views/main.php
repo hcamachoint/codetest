@@ -70,11 +70,17 @@
 	<h1>Welcome to CodeIgniter!</h1>
 
 	<div id="body">
-		<p>To register <a href="<?php echo base_url(); ?>auth/register">here!</a></p>
-		<p>To login <a href="<?php echo base_url(); ?>auth/login">here!</a></p>
+		<p>This is the main page!</p>
+		<p>Page rendered in <strong>{elapsed_time}</strong> seconds. <?php echo  (ENVIRONMENT === 'development') ?  'CodeIgniter Version <strong>' . CI_VERSION . '</strong>' : '' ?></p>
 	</div>
 
-	<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds. <?php echo  (ENVIRONMENT === 'development') ?  'CodeIgniter Version <strong>' . CI_VERSION . '</strong>' : '' ?></p>
+	<?php 
+		if (empty($_SESSION['id'])) {
+			echo '<p class="footer"><a href="'.base_url().'">Index</a> & <a href="'.base_url().'auth/register">Register</a> & <a href="'.base_url().'auth/login">Login</a></p>';
+		}else{
+			echo '<p class="footer"><a href="'.base_url().'">Index</a> & <a href="'.base_url().'home">Home</a> & <a href="'.base_url().'auth/logout">Logout</a></p>';
+		}
+	?>
 </div>
 
 </body>

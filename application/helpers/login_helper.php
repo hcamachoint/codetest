@@ -6,6 +6,11 @@ function isLogin(){
     redirect(base_url('auth/login'));
 }
 
+function isNotLogin(){
+    if(!empty($_SESSION['email']))
+      redirect(base_url('home'));
+  }
+
 function uuid()
 {
     return sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x',

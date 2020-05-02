@@ -28,15 +28,19 @@ class User extends CI_Model
     }
 
     function can_login($email, $password){
-        //$this->load->library('encrypt');
+        $this->load->library('encryption');
         
         $this->db->where("email", $email);
-        $this->db->where("password", $password);
         $query = $this->db->get("users");
 
         if ($query->num_rows() > 0) {
-            foreach($query->result() as $row){$this->session->set_userdata('id', $row->id);}
-            return true;
+            foreach($query->result() as $row){
+                if($row->status == 1 && $password === $this->encryption->decrypt($row->password)){
+                    $this->session->set_userdata('id', $row->id);
+                    return true;
+                }
+            }
+            return false;
         }else{
             return false;
         }

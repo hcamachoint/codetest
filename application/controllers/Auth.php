@@ -23,9 +23,11 @@ class Auth extends CI_Controller{
 
     function register_validation(){
         isNotLogin();
-        $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]');
-        $this->form_validation->set_rules('password', 'Password', 'required|min_length[8]');
-        $this->form_validation->set_rules('password_confirm', 'Confirm Password', 'required|matches[password]');
+        $this->form_validation->set_rules('firstname', 'First Name', 'required|min_length[3]|max_length[30]');
+        $this->form_validation->set_rules('lastname', 'Last Name', 'required|min_length[3]|max_length[30]');
+        $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]|min_length[5]|max_length[100]');
+        $this->form_validation->set_rules('password', 'Password', 'required|min_length[6]|max_length[100]');
+        $this->form_validation->set_rules('password_confirm', 'Confirm Password', 'required|matches[password]|min_length[6]|max_length[100]');
 
         if ($this->form_validation->run()) {
             $data = array(
@@ -61,11 +63,8 @@ class Auth extends CI_Controller{
             $password =  $this->input->post('password');
             
             if ($this->user->can_login($email, $password)) {
-                $session_data = array('email' => $email);
-                $this->session->set_userdata($session_data);
                 redirect(base_url() . 'home');
             }else{
-                $this->session->set_flashdata('error', 'Invalid email or password!');
                 redirect(base_url() . 'auth/login');
             }
         }else{

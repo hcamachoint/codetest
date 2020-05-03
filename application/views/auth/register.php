@@ -4,7 +4,15 @@
 	</div>
 
 	<div class="card-body">
-		<form method="post" action="<?php echo base_url(); ?>auth/register_validation">
+        <form method="post" action="<?php echo base_url(); ?>auth/register_validation">
+            <div class="form-group">
+                <input type="text" name="firstname" placeholder="First Name">
+                <span class="text-danger"><?php echo form_error('firstname'); ?></span>
+            </div>
+            <div class="form-group">
+                <input type="text" name="lastname" placeholder="Last Name">
+                <span class="text-danger"><?php echo form_error('lastname'); ?></span>
+            </div>
             <div class="form-group">
                 <input type="text" name="email" placeholder="Email">
                 <span class="text-danger"><?php echo form_error('email'); ?></span>

@@ -5,7 +5,6 @@
 
 	<div class="card-body">
 		<p>This is the main page!</p>
-		<p>Page rendered in</p>
 	</div>
 
 	<div class="card-footer">

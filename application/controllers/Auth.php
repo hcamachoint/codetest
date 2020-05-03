@@ -14,15 +14,19 @@ class Auth extends CI_Controller{
 
     function register(){
         isNotLogin();
-        $data['title'] = 'Codetest Register';
-        $this->load->view("auth/register.php", $data);
+        $data['title'] = 'Register';
+        $this->load->view('templates/header', $data);
+		$this->load->view('templates/menu');
+		$this->load->view("auth/register.php");
+		$this->load->view('templates/footer');
     }
 
     function register_validation(){
         isNotLogin();
-        $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
-        $this->form_validation->set_rules('password', 'Password', 'required');
-        
+        $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]');
+        $this->form_validation->set_rules('password', 'Password', 'required|min_length[8]');
+        $this->form_validation->set_rules('password_confirm', 'Confirm Password', 'required|matches[password]');
+
         if ($this->form_validation->run()) {
             $data = array(
                 'uuid' => uuid(),
@@ -31,14 +35,20 @@ class Auth extends CI_Controller{
                 'status' => 1
                );
             $this->user->insert_data($data);
+            $this->session->set_flashdata('success', 'Account Created!');
             $this->login();
-        }        
+        }else{
+            $this->register();
+        }    
     }
   
     function login(){
         isNotLogin();
-        $data['title'] = 'Codetest Login';
-        $this->load->view("auth/login.php", $data);
+        $data['title'] = 'Login';
+        $this->load->view('templates/header', $data);
+		$this->load->view('templates/menu');
+		$this->load->view("auth/login.php");
+		$this->load->view('templates/footer');
     }
 
     function login_validation(){
